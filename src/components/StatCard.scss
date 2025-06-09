@@ -1,0 +1,26 @@
+.stat-card {
+  border-left: 6px solid #1976d2;
+  margin-bottom: 16px;
+  transition: box-shadow 0.2s, transform 0.2s;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__icon {
+    font-size: 2.5rem;
+    color: #1976d2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__subtitle {
+    margin-top: 4px;
+  }
+}
+.stat-card-motion {
+  width: 20%;
+}

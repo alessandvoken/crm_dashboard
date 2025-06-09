@@ -1,11 +1,7 @@
-import Hello from "./components/Hello";
+import Dashboard from "./pages/Dashboard";
 
-const App: React.FC = () => {
-  return (
-    <div>
-      <Hello />
-    </div>
-  );
-};
+function App() {
+  return <Dashboard />;
+}
 
 export default App;
