@@ -29,7 +29,7 @@ export const StatCard = ({
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.1 }}
     sx={{
-      width: "18%",
+      width: "20rem",
       borderLeft: `6px solid ${color ?? "#1976d2"}`,
       mb: 2,
       boxShadow: "0 1.5px 6px 0 rgba(0,0,0,0.12)",
@@ -40,11 +40,18 @@ export const StatCard = ({
       display: "inline-block",
     }}
   >
-    <CardContent sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+    <CardContent
+      sx={{
+        display: "flex",
+        alignItems: "start",
+        gap: 1.5,
+        height: "100%",
+      }}
+    >
       {icon && (
         <Box
           sx={{
-            fontSize: "2rem",
+            fontSize: "2.2rem",
             color: color ?? "#1976d2",
             display: "flex",
             alignItems: "center",
@@ -55,7 +62,12 @@ export const StatCard = ({
         </Box>
       )}
       <Box>
-        <Typography variant="h6" color="text.secondary" gutterBottom>
+        <Typography
+          variant="h6"
+          color="text.secondary"
+          gutterBottom
+          sx={{ mt: 0.7 }}
+        >
           {label}
         </Typography>
         <Typography variant="h4">
