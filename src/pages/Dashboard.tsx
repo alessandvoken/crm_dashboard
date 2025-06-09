@@ -1,21 +1,27 @@
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 import { useUsers } from "../hooks/useUsers";
-import { getStatCardData } from "../helpers/statCardUtils";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store";
+import { getUserCardData } from "../helpers/userCardUtils";
 import { useTickets } from "../hooks/useTickets";
 import { StatCard } from "../components/StatCard";
 import { getOpenTickets, getSlaPercent } from "../helpers/ticketUtils";
 
 const Dashboard = () => {
-  const { users, loading, error } = useUsers();
+  const { loading, error } = useUsers();
+
   const { tickets } = useTickets();
 
   const openTickets = getOpenTickets(tickets);
   const slaPercent = getSlaPercent(openTickets);
 
-  // Usa helper per preparare i dati della card utenti
-  const { value, percentChangeNode } = getStatCardData(
-    users.length,
+  const userHistory = useSelector(
+    (state: RootState) => state.userHistory.history
+  );
+
+  const { value, percentChangeNode } = getUserCardData(
+    userHistory,
     loading,
     "#388e3c"
   );

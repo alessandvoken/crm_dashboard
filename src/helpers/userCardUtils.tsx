@@ -3,33 +3,38 @@ import { motion } from "framer-motion";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 
-export function getStatCardData(
-  rawValue: number,
+// Prende la storia completa e calcola il trend sugli ultimi 2 snapshot
+export function getUserCardData(
+  history: { date: string; value: number }[],
   loading: boolean,
   color: string
 ): {
   value: number;
   percentChangeNode: ReactNode;
 } {
-  const value = loading
-    ? 0
-    : Math.floor(rawValue * (1 + Math.random() * 0.1 - 0.15));
+  const last = history[history.length - 1];
+  const prev = history[history.length - 2];
 
-  const yesterday = loading
-    ? 0
-    : Math.max(0, value + Math.floor(Math.random() * 11 - 5)); // +/-5
+  const value = last ? last.value : 0;
 
-  const percentChangeValue =
-    loading || yesterday === 0 ? null : ((value - yesterday) / yesterday) * 100;
-
+  // Solo mostra trend se esistono almeno 2 valori
   let percentChangeNode: ReactNode = null;
-  if (percentChangeValue !== null) {
+  if (
+    !loading &&
+    last &&
+    prev &&
+    typeof last.value === "number" &&
+    typeof prev.value === "number" &&
+    prev.value > 0
+  ) {
+    const percentChangeValue = ((last.value - prev.value) / prev.value) * 100;
     const isPositive = percentChangeValue >= 0;
     percentChangeNode = (
       <motion.span
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        key={percentChangeValue}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: 0.12 }}
         style={{ fontWeight: 500, display: "flex", alignItems: "center" }}
       >
         {isPositive ? (
@@ -45,10 +50,12 @@ export function getStatCardData(
         )}
         <span style={{ color: isPositive ? color : "#d32f2f" }}>
           {isPositive ? "+" : ""}
-          {percentChangeValue.toFixed(1)}%
+          {Math.abs(percentChangeValue).toFixed(2)}%
         </span>
       </motion.span>
     );
+  } else {
+    percentChangeNode = null;
   }
 
   return { value, percentChangeNode };

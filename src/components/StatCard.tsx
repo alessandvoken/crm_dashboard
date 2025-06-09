@@ -25,7 +25,7 @@ export const StatCard = ({
       scale: 1,
       boxShadow: "0 8px 16px 0 rgba(0,0,0,0.12)",
     }}
-    initial={{ opacity: 0, y: 20 }}
+    initial={{ opacity: 0, y: 0 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.1 }}
     sx={{
@@ -72,20 +72,24 @@ export const StatCard = ({
         </Typography>
         <Typography variant="h4">
           <motion.span
-            key={value}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.1, delay: 0.1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.25, delay: 0.05 }}
             style={{ display: "inline-block" }}
           >
             {value}
           </motion.span>
         </Typography>
+
         {subtitle && (
           <Typography
             variant="subtitle2"
             color="text.secondary"
             sx={{ mt: 0.5 }}
+            component={motion.div}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.25, delay: 0.1 }}
           >
             {subtitle}
           </Typography>
