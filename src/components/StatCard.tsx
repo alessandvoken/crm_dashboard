@@ -1,13 +1,14 @@
 import { Card, CardContent, Typography, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import "./StatCard.scss";
+import type React from "react";
 
 interface StatCardProps {
   label: string;
   value: string | number;
   color?: string;
   icon?: React.ReactNode;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
 }
 
 export const StatCard = ({ label, value, icon, subtitle }: StatCardProps) => (
@@ -30,7 +31,14 @@ export const StatCard = ({ label, value, icon, subtitle }: StatCardProps) => (
             {label}
           </Typography>
           <Typography variant="h4" className="stat-value">
-            {value}
+            <motion.span
+              key={value}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              {value}
+            </motion.span>
           </Typography>
           {subtitle && (
             <Typography
