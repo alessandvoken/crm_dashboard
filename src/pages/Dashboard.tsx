@@ -2,7 +2,7 @@ import { StatCard } from "../components/StatCard";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 
 const Dashboard = () => (
-  <div className="mt-5">
+  <div>
     <StatCard
       label="Active users"
       value={128}
