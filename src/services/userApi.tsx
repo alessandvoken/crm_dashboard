@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const API_URL = "https://dummyjson.com/users";
+const USERCOUNT_API_URL = import.meta.env.VITE_USERCOUNT_API as string;
 
 export const fetchUsers = async () => {
-  const res = await axios.get(API_URL);
+  const res = await axios.get(USERCOUNT_API_URL);
   return res.data.users;
 };
