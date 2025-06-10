@@ -36,6 +36,22 @@ const Dashboard = () => {
         icon={<PeopleAltOutlinedIcon fontSize="inherit" />}
         subtitle={percentChangeNode}
         color="#388e3c"
+        action={
+          <span
+            style={{
+              color: "#1976d2",
+              cursor: "pointer",
+              textDecoration: "underline",
+              fontWeight: 500,
+              fontSize: "0.95rem",
+            }}
+            onClick={() => {
+              alert("Users details!");
+            }}
+          >
+            See users info
+          </span>
+        }
       />
 
       <StatCard

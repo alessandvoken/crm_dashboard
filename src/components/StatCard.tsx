@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography, Box } from "@mui/material";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import type React from "react";
 
 interface StatCardProps {
@@ -61,7 +61,7 @@ export const StatCard = ({
           {icon}
         </Box>
       )}
-      <Box>
+      <Box sx={{ minWidth: 0 }}>
         <Typography
           variant="h6"
           color="text.secondary"
@@ -81,20 +81,37 @@ export const StatCard = ({
           </motion.span>
         </Typography>
 
-        {subtitle && (
-          <Typography
-            variant="subtitle2"
-            color="text.secondary"
-            sx={{ mt: 0.5 }}
-            component={motion.div}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.25, delay: 0.1 }}
-          >
-            {subtitle}
-          </Typography>
-        )}
-        {action && <Box sx={{ mt: 1 }}>{action}</Box>}
+        {/* Subtitle + Action: fixed space to avoid jump */}
+        <Box
+          sx={{
+            minHeight: 36,
+            mt: 0.5,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+          }}
+        >
+          <AnimatePresence mode="wait">
+            {subtitle ? (
+              <Typography
+                key="subtitle"
+                variant="subtitle2"
+                color="text.secondary"
+                component={motion.div}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25, delay: 0.1 }}
+                sx={{ minHeight: 24 }}
+              >
+                {subtitle}
+              </Typography>
+            ) : (
+              <Box sx={{ minHeight: 24 }} />
+            )}
+          </AnimatePresence>
+          {action && <Box sx={{ mt: 0.5 }}>{action}</Box>}
+        </Box>
       </Box>
     </CardContent>
   </Card>
