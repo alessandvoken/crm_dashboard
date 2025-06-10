@@ -17,7 +17,7 @@ export function useUsers() {
         setLoading(true);
         let result = await fetchUsers();
 
-        // --- Simulazione variazioni ---
+        // --- Simulazione variazioni Users---
 
         const variation = Math.floor(Math.random() * 7) - 3;
         if (variation > 0) {
