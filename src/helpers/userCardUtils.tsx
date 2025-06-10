@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 
-// Prende la storia completa e calcola il trend sugli ultimi 2 snapshot
 export function getUserCardData(
   history: { date: string; value: number }[],
   loading: boolean,
@@ -14,11 +13,10 @@ export function getUserCardData(
 } {
   const last = history[history.length - 1];
   const prev = history[history.length - 2];
-
   const value = last ? last.value : 0;
 
-  // Solo mostra trend se esistono almeno 2 valori
   let percentChangeNode: ReactNode = null;
+
   if (
     !loading &&
     last &&
@@ -27,11 +25,15 @@ export function getUserCardData(
     typeof prev.value === "number" &&
     prev.value > 0
   ) {
-    const percentChangeValue = ((last.value - prev.value) / prev.value) * 100;
-    const isPositive = percentChangeValue >= 0;
+    const delta = last.value - prev.value;
+    const isPositive = delta >= 0;
+
+    const absDelta = Math.abs(delta);
+    const userLabel = absDelta === 1 ? "user" : "users";
+
     percentChangeNode = (
       <motion.span
-        key={percentChangeValue}
+        key={delta}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, delay: 0.12 }}
@@ -40,7 +42,7 @@ export function getUserCardData(
         {isPositive ? (
           <TrendingUpIcon
             fontSize="medium"
-            sx={{ color: color, mr: 0.5, verticalAlign: "middle" }}
+            sx={{ color: color, mr: 0.3, verticalAlign: "middle" }}
           />
         ) : (
           <TrendingDownIcon
@@ -50,9 +52,23 @@ export function getUserCardData(
         )}
         <span style={{ color: isPositive ? color : "#d32f2f" }}>
           {isPositive ? "+" : ""}
-          {Math.abs(percentChangeValue).toFixed(2)}%
+          {delta} {userLabel}
         </span>
       </motion.span>
+    );
+  } else if (!loading && history.length < 2) {
+    // First render
+    percentChangeNode = (
+      <span
+        style={{
+          color: "inherit",
+          fontWeight: 500,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        Awaiting user activity
+      </span>
     );
   } else {
     percentChangeNode = null;

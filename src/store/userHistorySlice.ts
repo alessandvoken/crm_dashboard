@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 type UserHistoryItem = {
-  date: string; // es: "15:22:47"
+  date: string;
   value: number;
 };
 
