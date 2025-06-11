@@ -98,10 +98,10 @@ export const StatCard = ({
                 variant="subtitle2"
                 color="text.secondary"
                 component={motion.div}
-                initial={{ opacity: 0 }}
+                initial={{ opacity: 1 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.25, delay: 0.1 }}
+                transition={{ duration: 0 }}
                 sx={{ minHeight: 24 }}
               >
                 {subtitle}

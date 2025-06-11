@@ -6,7 +6,7 @@ import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 export function getMRRCardData(
   history: { value: number }[],
   loading: boolean,
-  color: string
+  _color: string
 ): {
   value: number;
   percentChangeNode: ReactNode;
