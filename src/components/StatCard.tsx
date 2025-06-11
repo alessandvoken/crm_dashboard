@@ -82,7 +82,6 @@ export const StatCard = ({
           </motion.span>
         </Typography>
 
-        {/* Subtitle + Action: fixed space to avoid jump */}
         <Box
           sx={{
             minHeight: 36,

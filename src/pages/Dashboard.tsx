@@ -1,32 +1,44 @@
+import Grid from "@mui/material/Grid";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
-import Grid from "@mui/material/Grid";
-import { useUsers } from "../hooks/useUsers";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store";
-import { getUserCardData } from "../helpers/userCardUtils";
-import { useTickets } from "../hooks/useTickets";
 import { StatCard } from "../components/StatCard";
+import { useUsers } from "../hooks/useUsers";
+import { useTickets } from "../hooks/useTickets";
+import { getUserCardData } from "../helpers/userCardUtils";
 import { getOpenTickets, getSlaPercent } from "../helpers/ticketUtils";
+import { useSimulatedMRR } from "../hooks/useSimulatedMRR";
+import { getMRRCardData } from "../helpers/getMRRCardData";
 
 const Dashboard = () => {
+  // 1. Dati utenti (custom hook)
   const { loading, error } = useUsers();
-
-  const { tickets } = useTickets();
-
-  const openTickets = getOpenTickets(tickets);
-  const slaPercent = getSlaPercent(openTickets);
-
   const userHistory = useSelector(
     (state: RootState) => state.userHistory.history
   );
 
+  // 2. Dati tickets (custom hook)
+  const { tickets } = useTickets();
+  const openTickets = getOpenTickets(tickets);
+  const slaPercent = getSlaPercent(openTickets);
+
+  // 3. Simulazione MRR
+  useSimulatedMRR();
+  const mrrSnapshots = useSelector(
+    (state: RootState) => state.mrrHistory.snapshots
+  );
+
+  // 4. Helpers per le card
   const { value, percentChangeNode } = getUserCardData(
     userHistory,
     loading,
     "#388e3c"
   );
+
+  const { value: mrrValue, percentChangeNode: mrrPercentChangeNode } =
+    getMRRCardData(mrrSnapshots, false, "#ffc107");
 
   if (error) return <div>Error: {error}</div>;
 
@@ -92,13 +104,9 @@ const Dashboard = () => {
         <Grid size={{ xs: 12, sm: 12, md: 3 }}>
           <StatCard
             label="MRR"
-            value="€12,340"
+            value={`€${mrrValue.toLocaleString()}`}
             icon={<AttachMoneyOutlinedIcon fontSize="inherit" />}
-            subtitle={
-              <span style={{ color: "inherit", fontWeight: 500 }}>
-                Compared to last month
-              </span>
-            }
+            subtitle={mrrPercentChangeNode}
             color="#ffc107"
             action={
               <span
@@ -117,7 +125,6 @@ const Dashboard = () => {
           />
         </Grid>
       </Grid>
-
       <div>{/* Table - Graphs */}</div>
     </div>
   );

@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 
-export function getUserCardData(
-  history: { date: string; value: number }[],
+export function getMRRCardData(
+  history: { value: number }[],
   loading: boolean,
   color: string
 ): {
@@ -26,14 +26,12 @@ export function getUserCardData(
     prev.value > 0
   ) {
     const delta = last.value - prev.value;
-    const isPositive = delta >= 0;
-
-    const absDelta = Math.abs(delta);
-    const userLabel = absDelta === 1 ? "user" : "users";
+    const perc = (delta / prev.value) * 100;
+    const isPositive = perc >= 0;
 
     percentChangeNode = (
       <motion.span
-        key={delta}
+        key={perc}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, delay: 0.12 }}
@@ -42,7 +40,7 @@ export function getUserCardData(
         {isPositive ? (
           <TrendingUpIcon
             fontSize="medium"
-            sx={{ color: color, mr: 1, verticalAlign: "middle" }}
+            sx={{ color: "#43a047", mr: 0.3, verticalAlign: "middle" }}
           />
         ) : (
           <TrendingDownIcon
@@ -50,9 +48,9 @@ export function getUserCardData(
             sx={{ color: "#d32f2f", mr: 1, verticalAlign: "middle" }}
           />
         )}
-        <span style={{ color: isPositive ? color : "#d32f2f" }}>
+        <span style={{ color: isPositive ? "#43a047" : "#d32f2f" }}>
           {isPositive ? "+" : ""}
-          {delta} {userLabel}
+          {perc.toFixed(2)}%
         </span>
       </motion.span>
     );
@@ -66,7 +64,7 @@ export function getUserCardData(
           alignItems: "center",
         }}
       >
-        Awaiting user activity
+        Awaiting MRR activity
       </span>
     );
   } else {

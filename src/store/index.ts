@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userHistoryReducer from "./userHistorySlice";
+import mrrReducer from "./mrrHistorySlice";
 
 export const store = configureStore({
   reducer: {
     userHistory: userHistoryReducer,
+    mrrHistory: mrrReducer,
     // slices aggiuntivi
   },
 });
