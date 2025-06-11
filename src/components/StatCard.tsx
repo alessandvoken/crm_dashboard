@@ -13,6 +13,7 @@ interface StatCardProps {
 
 export const StatCard = ({
   label,
+
   value,
   icon,
   subtitle,

@@ -8,6 +8,8 @@ import { useTickets } from "../hooks/useTickets";
 import { StatCard } from "../components/StatCard";
 import { getOpenTickets, getSlaPercent } from "../helpers/ticketUtils";
 
+import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
+
 const Dashboard = () => {
   const { loading, error } = useUsers();
 
@@ -49,7 +51,7 @@ const Dashboard = () => {
               alert("Users details!");
             }}
           >
-            See users info
+            View users info
           </span>
         }
       />
@@ -73,7 +75,32 @@ const Dashboard = () => {
               alert("Show ticket details!");
             }}
           >
-            See open tickets
+            View open tickets
+          </span>
+        }
+      />
+      <StatCard
+        label="MRR"
+        value="€12,340"
+        icon={<AttachMoneyOutlinedIcon fontSize="inherit" />}
+        subtitle={
+          <span style={{ color: "inherit", fontWeight: 500 }}>
+            Compared to last month
+          </span>
+        }
+        color="#ffc107"
+        action={
+          <span
+            style={{
+              color: "#1976d2",
+              cursor: "pointer",
+              textDecoration: "underline",
+              fontWeight: 500,
+              fontSize: "0.95rem",
+            }}
+            onClick={() => alert("Turnover details coming soon!")}
+          >
+            View MRR trend
           </span>
         }
       />
